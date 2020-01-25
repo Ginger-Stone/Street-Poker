@@ -1,0 +1,68 @@
+:root{
+    background:black;
+    color:white;
+}
+
+main{
+    margin-top: 70px;
+}
+
+h1,h4{
+    color:white;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+}
+
+.main-img{
+    width: 90%;
+    height: auto;
+    margin-left: 5%;
+}
+
+button{
+    color:white;
+    background-color: black;
+    border: 1px solid white;
+    border-radius: 40px;
+    padding: 0px;
+    width: 50%;
+    margin-left: 25%; 
+    margin-top: 30px; 
+}
+
+#main, #computer-player, #starting-card{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+a{text-decoration: none;}
+
+#starting-card{
+    margin: 40px 0;
+}
+
+.images{
+    margin-left:10px;
+}
+
+.images img{
+    width:70px;
+    height:100px;
+}
+
+#rules{
+    float: right;
+    margin: 0;
+    color: white;
+
+}
+
+/* Responsiveness for large devices */
+@media (min-width:768px){
+    main{
+        width: 50%;
+        margin-left: 25%;
+    }
+}

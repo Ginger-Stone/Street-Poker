@@ -42,14 +42,24 @@ a{text-decoration: none;}
 #starting-card{
     margin: 40px 0;
 }
+.mid{
+    width: 100%;
+}
 
-.images{
+.playing-card,.images,.unpicked-cards{
     margin-left:10px;
 }
 
-.images img{
+.playing-card img,.images img {
     width:70px;
     height:100px;
+}
+#unpicked-cards, #starting-card{
+    width: 50%;
+}
+img.unpicked-cards{
+    /* float: right; */
+    width: 100%;
 }
 
 #rules{

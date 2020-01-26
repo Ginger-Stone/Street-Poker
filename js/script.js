@@ -1,8 +1,10 @@
-
+let Bottom
+let pickedCards= new Set()
 function play(){
     humanPlayer()
     computerPlayer()
-    cardOnBoard()
+    Bottom=cardOnBoard()
+    console.log(pickedCards)
 
 }
 
@@ -16,6 +18,18 @@ function handler(){
     let randomFlowers=Math.floor(Math.random()*4)
     // console.log(rand)
     let imgName=cards[randomCards]+flowers[randomFlowers]
+    if(pickedCards.size!=52){
+        if(pickedCards.has(imgName)===false){
+        pickedCards.add(imgName)
+        }else{
+            handler()
+        }
+    }else{
+        // how to clear but still remain with cards that players have
+        // hio time yenye cards huisha then cards on the table zinachukuliwa kuendelesha game
+        pickedCards.clear()
+    }
+
     // console.log(imgName)
     return imgName;
 
@@ -34,14 +48,19 @@ function startingCard(){
     let randomFlowers=Math.floor(Math.random()*4)
     let flowers=['S','C','D','H']
     let imgName=cards[card]+flowers[randomFlowers]
+    if(pickedCards.has(imgName)===false){
+    pickedCards.add(imgName)
     // console.log(imgName)
     let cardImg= document.createElement('img');
     cardImg.setAttribute('id',imgName)
     cardImg.src=`img/PNG/${imgName}.png`;
     let imagesDiv=document.createElement('div')
-    imagesDiv.setAttribute('class','images' )
+    imagesDiv.setAttribute('class','playing-card' )
     document.querySelector('#starting-card').appendChild(imagesDiv)
     imagesDiv.appendChild(cardImg);
+    }else{
+        startingCard()
+    }
     
     return imgName
 }
@@ -72,6 +91,8 @@ function humanPlayer(){
 
 function getPlayedCard(humanCardChoice){
     console.log(humanCardChoice)
+    gameRules(Bottom,humanCardChoice)
+    return humanCardChoice
 }
 
 // randomly allocate the computer player four cards
@@ -102,6 +123,8 @@ function computerPlayer(){
 function cardOnBoard(){
  let first=startingCard()
  console.log(first)
+
+ return first;
 }
 
 // the logic of the game. Used by the computer to understand the game
@@ -111,13 +134,133 @@ function gameLogic(human,computer,firstCard){
 }
 
 // Rules of the game
-function gameRules(){
+function gameRules(cardBottom,cardOnTop){
+    console.log(cardBottom.length)
+    console.log(cardOnTop.length)    
+    if(cardBottom.length===3&&cardOnTop.length===3){
+        if(cardBottom[0]+cardBottom[1]===cardOnTop[0]+cardOnTop[1]||cardBottom[cardBottom.length-1]===cardOnTop[cardOnTop.length-1]){
+            document.getElementById(cardBottom).remove()
+            cardBottom=cardOnTop
+            Bottom=cardOnTop
+            let cardImg= document.createElement('img');
+            cardImg.setAttribute('id',cardBottom)
+            cardImg.src=`img/PNG/${cardBottom}.png`;
+            let imagesDiv=document.createElement('div')
+            imagesDiv.setAttribute('class','images' )
+            document.querySelector('#starting-card').appendChild(imagesDiv)
+            imagesDiv.appendChild(cardImg);
+            console.log(cardBottom)
+            console.log("Play")
 
-
+        }
+    }else if(cardBottom.length===3&&cardOnTop.length===2||cardBottom.length===2&&cardOnTop.length===3){
+        if(cardBottom[cardBottom.length-1]===cardOnTop[cardOnTop.length-1]){
+            document.getElementById(cardBottom).remove()
+            cardBottom=cardOnTop
+            Bottom=cardOnTop
+            let cardImg= document.createElement('img');
+            cardImg.setAttribute('id',cardBottom)
+            cardImg.src=`img/PNG/${cardBottom}.png`;
+            let imagesDiv=document.createElement('div')
+            imagesDiv.setAttribute('class','images' )
+            document.querySelector('#starting-card').appendChild(imagesDiv)
+            imagesDiv.appendChild(cardImg);
+            // console.log(typeof(cardBottom))
+            // console.log(typeof(cardOnTop))
+            console.log(cardBottom)
+            console.log("Play")
+    
+        }
+    }else if(cardBottom.length===2&&cardOnTop.length===2){
+        if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
+            if(cardBottom[0]!="2"||cardBottom[0]!="3"){
+            document.getElementById(cardBottom).remove()
+            cardBottom=cardOnTop
+            Bottom=cardOnTop
+            let cardImg= document.createElement('img');
+            cardImg.setAttribute('id',cardBottom)
+            cardImg.src=`img/PNG/${cardBottom}.png`;
+            let imagesDiv=document.createElement('div')
+            imagesDiv.setAttribute('class','playing-card')
+            document.querySelector('#starting-card').appendChild(imagesDiv)
+            imagesDiv.appendChild(cardImg);
+            let v=document.getElementById("starting-card");
+            v=v.classList;
+            console.log("classList: "+v)
+            console.log(cardBottom)
+            console.log("Play")
+    
+            }else if(cardBottom[0]==="2"){
+                if(cardBottom[0]===cardOnTop[0]||cardBottom[0]==="A"){
+                    document.getElementById(cardBottom).remove()
+                cardBottom=cardOnTop
+                Bottom=cardOnTop
+                let cardImg= document.createElement('img');
+                cardImg.setAttribute('id',cardBottom)
+                cardImg.src=`img/PNG/${cardBottom}.png`;
+                let imagesDiv=document.createElement('div')
+                imagesDiv.setAttribute('class','playing-card')
+                document.querySelector('#starting-card').appendChild(imagesDiv)
+                imagesDiv.appendChild(cardImg);
+                let v=document.getElementById("starting-card");
+                v=v.classList;
+                console.log("classList: "+v)
+                console.log(cardBottom)
+                console.log("Play")
+                }else{
+                    collectCard(2)
+                }
+            }else if(cardBottom[0]==="3"){
+                if(cardBottom[0]===cardOnTop[0]||cardBottom[0]==="A"){
+                    document.getElementById(cardBottom).remove()
+                    cardBottom=cardOnTop
+                    Bottom=cardOnTop
+                    let cardImg= document.createElement('img');
+                    cardImg.setAttribute('id',cardBottom)
+                    cardImg.src=`img/PNG/${cardBottom}.png`;
+                    let imagesDiv=document.createElement('div')
+                    imagesDiv.setAttribute('class','playing-card')
+                    document.querySelector('#starting-card').appendChild(imagesDiv)
+                    imagesDiv.appendChild(cardImg);
+                    let v=document.getElementById("starting-card");
+                    v=v.classList;
+                    console.log("classList: "+v)
+                    console.log(cardBottom)
+                    console.log("Play")
+                }else{
+                    collectCard(3)
+                }
+            }
+        }
+    }else{
+        console.log(cardBottom)
+        console.log(cardOnTop)
+        console.log("oops try again")
+        
+    }
 }
 
 // Gives a player cards during the game depending on the situation
-function collectCard(number){
+// check which card is on board first
+function collectCard(numberOfCards){
+    console.log(numberOfCards)
+    let i=0
+    while (i<numberOfCards){
+        let cardCollected=handler()
+        let cardImg= document.createElement('img');
+        cardImg.setAttribute('id',cardCollected)
+        cardImg.src=`img/PNG/${cardCollected}.png`;
+        let imagesDiv=document.createElement('div')
+        imagesDiv.setAttribute('class','playing-card')
+        document.querySelector('#main').appendChild(imagesDiv)
+        imagesDiv.appendChild(cardImg);
+        // let v=document.getElementById("starting-card");
+        // v=v.classList;
+        // console.log("classList: "+v)
+        // console.log(cardBottom)
+        i++
+    }
+    console.log("Cards collected" +pickedCards.size)
 
 }
 

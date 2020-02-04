@@ -40,22 +40,32 @@ button{
 a{text-decoration: none;}
 
 #starting-card{
-    margin: 40px 0;
+    margin: 40px 60px;
+    margin-right: 0 !important;
+    display: inline-block;
+    justify-content: space-around;
+    /* width:50%; */
 }
 .mid{
     width: 100%;
+}
+
+#unpicked-cards{
+    margin:40px 0 !important;
+    display: inline-block !important;
 }
 
 .playing-card,.images,.unpicked-cards{
     margin-left:10px;
 }
 
-.playing-card img,.images img {
+.playing-card img, img.playing-card,.images img,img.images {
     width:70px;
     height:100px;
+    /* transition: 10s all ease-in-out; */
 }
 #unpicked-cards, #starting-card{
-    width: 50%;
+    width: 45%;
 }
 img.unpicked-cards{
     /* float: right; */

@@ -78,7 +78,8 @@ function sound(){
 // Generates a random starting card from none special cards
 function startingCard(){
     let imgName=handler()
-    if(imgName[0]!="A"||imgName[0]!="2"||imgName[0]!="3"||imgName[0]!="8"||imgName[0]!="J"||imgName[0]!="K"||imgName[0]!="Q"){
+    // console.log(imgName[0]!="A")
+    if(imgName[0]!="A"&&imgName[0]!="2"&&imgName[0]!="3"&&imgName[0]!="8"&&imgName[0]!="J"&&imgName[0]!="K"&&imgName[0]!="Q"){
     console.log(imgName[0])
     let cardImg= document.createElement('img');
     cardImg.setAttribute('id',imgName)
@@ -514,7 +515,7 @@ function playMore(status) {
 
 // Gives a player cards during the game depending on the situation
 // check which card is on board first
-function collectCard(){
+async function collectCard(){
     console.log("collect card Bottom"+Bottom)
     let i=0
     if(Bottom[0]==="2"){
@@ -563,6 +564,7 @@ function collectCard(){
         }
     }else if (GameStatus===true){
         while (i<number){
+            await sleep(100)
             computer()
             i++
         }

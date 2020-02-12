@@ -425,6 +425,9 @@ if(cardBottom==="J"){
                 } 
                 
         }else if(cardBottom[0]!=cardOnTop[0]&&cardOnTop[0]==="A"){
+            if(Bottom!=null){
+            document.getElementById("cardBottom").remove()
+            }
             console.log("change game")
             cardBottom=cardOnTop
             Bottom=cardOnTop

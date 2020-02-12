@@ -1,11 +1,11 @@
 {
-    "background_color": "#fff",
+    "background_color": "#000",
     "display": "standalone",
     "orientation":"portrait",
     "theme_color": "#fff",           
-    "short_name": "PWA Fire",
-    "name": "PWA Fire",
-    "description": "description or purpose of your progressive web app",
+    "short_name": "Street Poker",
+    "name": "Street Poker",
+    "description": "Street poker is a game of cards that we normally play physically but now you can access on your phone",
     "lang": "en-US",
     "icons": [
     {

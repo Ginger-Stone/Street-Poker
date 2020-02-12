@@ -238,28 +238,7 @@ function gameLogic(computer){
 function gameRules(cardBottom,cardOnTop){
     // console.log("card Bottom: "+cardBottom)
     // console.log("card Top: "+cardOnTop)
-if(cardBottom==="J"){
-
-    if(cardBottom[0]==="J"&&cardOnTop[0]==="J"||cardBottom[0]==="J"&&cardOnTop[0]==="A"){
-        if(Bottom!=null){
-            document.getElementById(cardBottom).remove()
-            }
-        cardBottom=cardOnTop
-        Bottom=cardOnTop
-        let cardImg= document.createElement('img');
-        cardImg.setAttribute('id',cardBottom)
-        cardImg.src=`images/PNG/${cardBottom}.png`;
-        let imagesDiv=document.createElement('div')
-        imagesDiv.setAttribute('class','playing-card')
-        document.querySelector('#starting-card').appendChild(imagesDiv)
-        imagesDiv.appendChild(cardImg);
-        // document.getElementById(cardOnTop).remove()
-        // humanCards.delete(cardOnTop)
-    // }else if(cardBottom[0]==="J"&&cardOnTop[0]!="J"||cardBottom[0]==="J"&&cardOnTop[0]!="A"){
-        }else{   
-        jump(GameStatus)
-    }
-}else if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
+if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
             console.log("card Bottom: "+cardBottom)
             console.log("card Top: "+cardOnTop)
             console.log("We're all set")
@@ -333,6 +312,27 @@ if(cardBottom==="J"){
                     if(GameStatus=true){
                         collectCard(2)
                     }
+                }
+            }else if(cardBottom==="J"){
+
+                if(cardBottom[0]==="J"&&cardOnTop[0]==="J"||cardBottom[0]==="J"&&cardOnTop[0]==="A"){
+                    if(Bottom!=null){
+                        document.getElementById(cardBottom).remove()
+                        }
+                    cardBottom=cardOnTop
+                    Bottom=cardOnTop
+                    let cardImg= document.createElement('img');
+                    cardImg.setAttribute('id',cardBottom)
+                    cardImg.src=`images/PNG/${cardBottom}.png`;
+                    let imagesDiv=document.createElement('div')
+                    imagesDiv.setAttribute('class','playing-card')
+                    document.querySelector('#starting-card').appendChild(imagesDiv)
+                    imagesDiv.appendChild(cardImg);
+                    // document.getElementById(cardOnTop).remove()
+                    // humanCards.delete(cardOnTop)
+                // }else if(cardBottom[0]==="J"&&cardOnTop[0]!="J"||cardBottom[0]==="J"&&cardOnTop[0]!="A"){
+                    }else{   
+                    jump(GameStatus)
                 }
             }else if(cardBottom==="J"){
 

@@ -123,8 +123,9 @@ async function switchBetweenPlayers(status){
     if(status===true){
         GameStatus=true
         info.innerHTML="Computer's turn"
-        await sleep(1500)
+        
         gameLogic(computerCards)
+        await sleep(1000)
         
     }else if(status===false){
         GameStatus=false
@@ -132,14 +133,16 @@ async function switchBetweenPlayers(status){
     }
 }
 
-function getPlayedCard(humanCardChoice){
+async function getPlayedCard(humanCardChoice){
     if(humanCardChoice!=null){
         gameRules(Bottom,humanCardChoice)
+        await sleep(1000)
         info.innerHTML="You Played: "+humanCardChoice
         if(humanCardChoice[0]===Bottom[0]||humanCardChoice[1]===Bottom[1]){
             document.getElementById(humanCardChoice).remove()
             humanCards.delete(humanCardChoice)
         }
+
         if(humanCardChoice[0]==="Q"||humanCardChoice[0]==="8"){
             playMore(GameStatus)
         }else{
@@ -420,6 +423,7 @@ if(cardBottom==="J"){
                 imagesDiv.appendChild(cardImg);
         
                 } 
+                
         }else if(cardBottom[0]!=cardOnTop[0]&&cardOnTop[0]==="A"){
             console.log("change game")
             cardBottom=cardOnTop
@@ -445,6 +449,7 @@ if(cardBottom==="J"){
             } 
 
     }
+    
     return cardBottom
     
 }
@@ -536,6 +541,15 @@ function collectCard(){
         console.log("Game continues with " +Bottom)
     }else{
         number=1
+        document.getElementById(Bottom).remove()
+        let cardImg= document.createElement('img');
+        cardImg.setAttribute('id',Bottom)
+        cardImg.src=`images/PNG/${Bottom}.png`;
+        let imagesDiv=document.createElement('div')
+        imagesDiv.setAttribute('class','playing-card')
+        document.querySelector('#starting-card').appendChild(imagesDiv)
+        imagesDiv.appendChild(cardImg);
+        console.log("Game continues with " +Bottom)
     }
 
     if (GameStatus===false){

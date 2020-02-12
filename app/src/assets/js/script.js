@@ -564,7 +564,7 @@ async function collectCard(){
         }
     }else if (GameStatus===true){
         while (i<number){
-            await sleep(100)
+            await sleep(1000)
             computer()
             i++
         }

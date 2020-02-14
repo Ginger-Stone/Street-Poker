@@ -172,8 +172,8 @@ async function removeEventListeners(){
 
 }
 
-let j=0
 function addEventListeners(){
+    let j=0
     while (j<k.length){
         console.log(k[j])
         k[j].addEventListener("click",function(){

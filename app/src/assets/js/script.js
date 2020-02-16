@@ -12,6 +12,8 @@ let info=document.getElementById('info')
 let timerT=document.getElementById('timer')
 let k=document.getElementsByClassName('listener')
 let BottomUi=document.getElementById(Bottom)
+let currentCard=document.getElementById("currentCard")
+
 
 // let g=document.getElementById('info')
 
@@ -201,6 +203,12 @@ function addEventListeners(){
     console.log(document.getElementsByClassName("unpicked-cards")[0])
         document.getElementsByClassName("unpicked-cards")[0].addEventListener("click",collectCard)
 
+        if(Bottom[0]==="J"){
+            document.getElementById('command').innerHTML="Jump"
+                        document.getElementById('command').addEventListener("click",function(){
+                            jump(GameStatus)
+                        })
+        }
 }
 
 // let humanCardChoiceListener=document.addEventListener("click",func)
@@ -224,14 +232,14 @@ async function getPlayedCard(humanCardChoice){
         if(humanCardChoice[0]==="Q"||humanCardChoice[0]==="8"){
            switchBetweenPlayers(false) 
         }else{
-
-
             switchBetweenPlayers(true)
         }
-    }else if(cardIsPlayed!=humanCardChoice&&cardIsPlayed[0]==="K"){
-            // cardBottom=cardOnTop
-            switchBetweenPlayers(true)
-    }else if(cardIsPlayed!=humanCardChoice&&cardIsPlayed[0]==="J"){
+    }
+    // else if(cardIsPlayed!=humanCardChoice&&cardIsPlayed[0]==="K"){
+    //         // cardBottom=cardOnTop
+    //         switchBetweenPlayers(true)
+    // }
+    else if(cardIsPlayed!=humanCardChoice&&cardIsPlayed[0]==="J"){
             // cardBottom=cardOnTop
             switchBetweenPlayers(true) 
     }else if(cardIsPlayed!=humanCardChoice){
@@ -319,9 +327,13 @@ function gameLogic(computer){
                         }
                         break;
                     }
-                }else if(i===compNumberOfCards){
+                }else if(i===compNumberOfCards&&Bottom[0]!="K"&&Bottom[0]!="J"){
                     collectCard()
                     break
+                }else if(i===compNumberOfCards&&Bottom[0]==="K"){
+                    kickback(false)
+                }else if(i===compNumberOfCards&&Bottom[0]==="J"){
+                    jump(false)
                 }
                 if (compNumberOfCards===1){
                     nkoKadi(true)
@@ -408,10 +420,20 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                         collectCard(2)
                     // }
                 }}else if(cardBottom[0]==="J"){
+                    // if(GameStatus===false){
+                        // document.getElementById('command').innerHTML="Jump"
+                        // document.getElementById('command').addEventListener("click",function(){
+                        //     jump(GameStatus)
+                        // })
+                    // }
                     if(cardBottom[0]==="J"&&cardOnTop[0]==="J"||cardBottom[0]==="J"&&cardOnTop[0]==="A"){
                         if(BottomUi!=null){
                             document.getElementById(cardBottom).remove()
                             }
+                            document.getElementById('command').removeEventListener("click",function(){
+                                jump(status)
+                            })
+                            document.getElementById('command').innerHTML="Command"
                         cardBottom=cardOnTop
                         Bottom=cardOnTop
                         let cardImg= document.createElement('img');
@@ -422,25 +444,32 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                         document.querySelector('#starting-card').appendChild(imagesDiv)
                         imagesDiv.appendChild(cardImg);
                         }else{   
-                        jump(GameStatus)
+                            
                         }
-                }else if(cardBottom==="K"){
-                    if(cardBottom[0]==="K"&&cardOnTop[0]==="K"||cardBottom[0]==="K"&&cardOnTop[0]==="A"){
-                        if(BottomUi!=null){
-                            document.getElementById(cardBottom).remove()
-                            }
-                            cardBottom=cardOnTop
-                            Bottom=cardOnTop
-                            let cardImg= document.createElement('img');
-                            cardImg.setAttribute('id',cardBottom)
-                            cardImg.src=`images/PNG/${cardBottom}.png`;
-                            let imagesDiv=document.createElement('div')
-                            imagesDiv.setAttribute('class','playing-card')
-                            document.querySelector('#starting-card').appendChild(imagesDiv)
-                            imagesDiv.appendChild(cardImg);
-                        }else{
-                            kickback(GameStatus)
-                        }
+                // }else if(cardBottom==="K"){
+                //     // if(GameStatus===false){
+                //         document.getElementById('command').innerHTML="Kickback"
+                //         document.getElementById('command').addEventListener("click",function(){
+                //             kickback(GameStatus)
+                //         })
+                //     // }
+                //     if(cardBottom[0]==="K"&&cardOnTop[0]==="K"||cardBottom[0]==="K"&&cardOnTop[0]==="A"){
+                //         if(BottomUi!=null){
+                //             document.getElementById(cardBottom).remove()
+                //             }
+                //             cardBottom=cardOnTop
+                //             Bottom=cardOnTop
+                //             let cardImg= document.createElement('img');
+                //             cardImg.setAttribute('id',cardBottom)
+                //             cardImg.src=`images/PNG/${cardBottom}.png`;
+                //             let imagesDiv=document.createElement('div')
+                //             imagesDiv.setAttribute('class','playing-card')
+                //             document.querySelector('#starting-card').appendChild(imagesDiv)
+                //             imagesDiv.appendChild(cardImg);
+                //         }else{
+                            
+                            
+                //         }
         }else if(cardOnTop[0]==="Q"||cardOnTop[0]==="8"){
             if(BottomUi!=null&&cardBottom!=null){
                 document.getElementById(cardBottom).remove()
@@ -471,7 +500,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
             imagesDiv.appendChild(cardImg);
         }else if(cardBottom[0]==="Q"&&cardBottom[1]!=cardOnTop[1]||cardBottom[0]==="8"&&cardBottom[1]!=cardOnTop[1]){
             collectCard()
-        }else if(cardBottom[0]!="2"&&cardBottom[0]!="3"&&cardBottom[0]!="8"&&cardBottom[0]!="J"&&cardBottom[0]!="Q"&&cardBottom[0]!="K"){
+        }else if(cardBottom[0]!="2"&&cardBottom[0]!="3"&&cardBottom[0]!="8"&&cardBottom[0]!="J"&&cardBottom[0]!="Q"){
             if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                 // console.log(cardBottom)
                 console.log("Bottom nu"+cardBottom)
@@ -482,8 +511,8 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                     }
 
                 cardBottom=cardOnTop
-                Bottom=cardOnTop
-                console.log("Bottom nu2"+cardBottom)
+                Bottom=cardBottom
+                console.log("Bottom kk"+Bottom)
                 let cardImg= document.createElement('img');
                 cardImg.setAttribute('id',cardBottom)
                 cardImg.src=`images/PNG/${cardBottom}.png`;
@@ -496,15 +525,16 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
             } 
         }else if(cardOnTop[0]==="A"){
             // place this first line before any rule so as to remove player card once its clicked
+            let ACard=cardOnTop
             if(cardOnTopUi!=null){
     document.getElementById(cardOnTop).remove()
             }
             if(BottomUi!=null){
-            document.getElementById("cardBottom").remove()
+            document.getElementById(cardBottom).remove()
             }
             console.log("change game")
-            cardBottom=cardOnTop
-            Bottom=cardOnTop
+            cardBottom=ACard
+            Bottom=ACard
             console.log("Bottom nu2"+cardBottom)
             let cardImg= document.createElement('img');
             cardImg.setAttribute('id',cardBottom)
@@ -556,32 +586,42 @@ function changeGame(){
 
 // kickback function
 
-function kickback(status){
-    BottomUi=document.getElementById(Bottom)
-    if(BottomUi!=null){
-        document.getElementById(Bottom).remove()
-        }
-        Bottom=0+Bottom[1]
-        let cardImg= document.createElement('img');
-        cardImg.setAttribute('id',Bottom)
-        cardImg.src=`images/PNG/${Bottom}.png`;
-        let imagesDiv=document.createElement('div')
-        imagesDiv.setAttribute('class','playing-card')
-        document.querySelector('#starting-card').appendChild(imagesDiv)
-        imagesDiv.appendChild(cardImg);
-        console.log("Game continues with " +Bottom)
-    if (status===true){
-        switchBetweenPlayers(true)
-    }else if (status===false){
-        // cardBottom=cardOnTop
-        switchBetweenPlayers(false)
-    } 
-}
+// function kickback(status){
+//     document.getElementById('command').removeEventListener("click",function(){
+//         kickback(status)
+//     })
+//     document.getElementById('command').innerHTML="Command"
+//     console.log("Botoom kk"+Bottom)
+//     BottomUi=document.getElementById(Bottom)
+//     if(BottomUi!=null){
+//         document.getElementById(Bottom).remove()
+//         }
+//         Bottom=0+Bottom[1]
+
+//         let cardImg= document.createElement('img');
+//         cardImg.setAttribute('id',Bottom)
+//         cardImg.src=`images/PNG/${Bottom}.png`;
+//         let imagesDiv=document.createElement('div')
+//         imagesDiv.setAttribute('class','playing-card')
+//         document.querySelector('#starting-card').appendChild(imagesDiv)
+//         imagesDiv.appendChild(cardImg);
+//         console.log("Game continues with " +Bottom)
+//     if (status===true){
+//         switchBetweenPlayers(true)
+//     }else if (status===false){
+//         // cardBottom=cardOnTop
+//         // switchBetweenPlayers(false)
+//     } 
+// }
 
 // jump function
 
 function jump(status){
-    if(Bottom!=null){
+    document.getElementById('command').removeEventListener("click",function(){
+        jump(status)
+    })
+    document.getElementById('command').innerHTML="Command"
+        if(Bottom!=null){
         document.getElementById(Bottom).remove()
         }
         Bottom=0+Bottom[1]
@@ -597,7 +637,7 @@ function jump(status){
     if (status===true){
         switchBetweenPlayers(true)
     }else if (status===false){
-        switchBetweenPlayers(false)
+        // switchBetweenPlayers(false)
     } 
 }
 
@@ -712,10 +752,7 @@ function gameOver(){
     counter++
     timer(counter,12000,"Time Out",gameOverTimer)
 
-    // if(counter>=300){
-    //     console.log("Game Over, Someone Win")
-    //     clearInterval(gameOverTimer)
-    // } 
+    currentCard.innerHTML=`Current card on board is :${Bottom}` 
 }
 
 // counter(Timer) function

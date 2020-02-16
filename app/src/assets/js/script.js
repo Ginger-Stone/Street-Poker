@@ -11,7 +11,7 @@ let humanCards=new Set()
 let info=document.getElementById('info')
 let timerT=document.getElementById('timer')
 let k=document.getElementsByClassName('listener')
-
+let BottomUi=document.getElementById(Bottom)
 
 // let g=document.getElementById('info')
 
@@ -228,6 +228,12 @@ async function getPlayedCard(humanCardChoice){
 
             switchBetweenPlayers(true)
         }
+    }else if(cardIsPlayed!=humanCardChoice&&cardIsPlayed[0]==="K"){
+            // cardBottom=cardOnTop
+            switchBetweenPlayers(true)
+    }else if(cardIsPlayed!=humanCardChoice&&cardIsPlayed[0]==="J"){
+            // cardBottom=cardOnTop
+            switchBetweenPlayers(true) 
     }else if(cardIsPlayed!=humanCardChoice){
         info.innerHTML="Not a possible move"
         await sleep(1500)
@@ -327,7 +333,7 @@ function gameLogic(computer){
 
 // Rules of the game
 function gameRules(cardBottom,cardOnTop){
-    let cardBottomUi=document.getElementById(cardBottom)
+    let BottomUi=document.getElementById(cardBottom)
     let cardOnTopUi=document.getElementById(cardOnTop)    
     // console.log("card Top: "+cardOnTop)
 if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
@@ -340,7 +346,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
             console.log("We're all set")
             if(cardBottom[0]==="2"){
                 if(cardBottom[0]===cardOnTop[0]||cardOnTop[0]==="A"){
-                    if(cardBottomUi!=null){
+                    if(BottomUi!=null){
                         document.getElementById(cardBottom).remove()
                         }
                     cardBottom=cardOnTop
@@ -353,7 +359,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                     document.querySelector('#starting-card').appendChild(imagesDiv)
                     imagesDiv.appendChild(cardImg);
                 }else if(cardOnTop[0]==="3"&&cardOnTop[1]===cardBottom[1]){
-                    if(cardBottomUi!=null){
+                    if(BottomUi!=null){
                         document.getElementById(cardBottom).remove()
                         }
                     cardBottom=cardOnTop
@@ -372,7 +378,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                 }
             }else if(cardBottom[0]==="3"){
                 if(cardBottom[0]===cardOnTop[0]||cardOnTop[0]==="A"){
-                    if(cardBottomUi!=null){
+                    if(BottomUi!=null){
                         document.getElementById(cardBottom).remove()
                         }
                     cardBottom=cardOnTop
@@ -385,7 +391,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                     document.querySelector('#starting-card').appendChild(imagesDiv)
                     imagesDiv.appendChild(cardImg);
                 }else if(cardOnTop[0]==="2"&&cardOnTop[1]===cardBottom[1]){
-                    if(cardBottomUi!=null){
+                    if(BottomUi!=null){
                         document.getElementById(cardBottom).remove()
                         }
                     cardBottom=cardOnTop
@@ -403,7 +409,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                     // }
                 }}else if(cardBottom[0]==="J"){
                     if(cardBottom[0]==="J"&&cardOnTop[0]==="J"||cardBottom[0]==="J"&&cardOnTop[0]==="A"){
-                        if(cardBottomUi!=null){
+                        if(BottomUi!=null){
                             document.getElementById(cardBottom).remove()
                             }
                         cardBottom=cardOnTop
@@ -420,7 +426,9 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                         }
                 }else if(cardBottom==="K"){
                     if(cardBottom[0]==="K"&&cardOnTop[0]==="K"||cardBottom[0]==="K"&&cardOnTop[0]==="A"){
+                        if(BottomUi!=null){
                             document.getElementById(cardBottom).remove()
+                            }
                             cardBottom=cardOnTop
                             Bottom=cardOnTop
                             let cardImg= document.createElement('img');
@@ -434,7 +442,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                             kickback(GameStatus)
                         }
         }else if(cardOnTop[0]==="Q"||cardOnTop[0]==="8"){
-            if(cardBottomUi!=null&&cardBottom!=null){
+            if(BottomUi!=null&&cardBottom!=null){
                 document.getElementById(cardBottom).remove()
                 }
             cardBottom=cardOnTop
@@ -449,7 +457,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
             imagesDiv.appendChild(cardImg);
         }else if(cardBottom[0]==="Q"&&cardBottom[1]===cardOnTop[1]||cardOnTop[0]==="8"&&cardBottom[1]===cardOnTop[1]){
             console.log("Bottom nu"+cardBottom)
-            if(cardBottomUi!=null){
+            if(BottomUi!=null){
             document.getElementById(cardBottom).remove()
             }
             cardBottom=cardOnTop
@@ -467,7 +475,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
             if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                 // console.log(cardBottom)
                 console.log("Bottom nu"+cardBottom)
-                if(cardBottomUi!=null&&cardBottom!=null){
+                if(BottomUi!=null){
                     console.log(Bottom)
                     console.log(cardBottom)
                     document.getElementById(cardBottom).remove()
@@ -491,7 +499,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
             if(cardOnTopUi!=null){
     document.getElementById(cardOnTop).remove()
             }
-            if(cardBottomUi!=null||cardBottom!=null){
+            if(BottomUi!=null){
             document.getElementById("cardBottom").remove()
             }
             console.log("change game")
@@ -549,7 +557,8 @@ function changeGame(){
 // kickback function
 
 function kickback(status){
-    if(Bottom!=null){
+    BottomUi=document.getElementById(Bottom)
+    if(BottomUi!=null){
         document.getElementById(Bottom).remove()
         }
         Bottom=0+Bottom[1]

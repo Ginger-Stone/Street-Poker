@@ -11,13 +11,19 @@ let humanCards=new Set()
 let info=document.getElementById('info')
 let timerT=document.getElementById('timer')
 let k=document.getElementsByClassName('listener')
+
+
 // let g=document.getElementById('info')
 
 async function play(){
+    document.getElementById("sounds").addEventListener("click",function(){
+        sound(random(5))
+    })
     humanPlayer()
     computerPlayer()
     // playMusic.play()
     Bottom=cardOnBoard()
+    console.log(Bottom)
     info.innerHTML="Choosing who to start"
     await sleep(2000)
     whoStarts()
@@ -52,11 +58,11 @@ function handler(){
     let randomCards=Math.floor(Math.random()*cardSet.size)
     let imgName=Array.from(cardSet)[randomCards]
     cardSet.delete(imgName)
-    console.log(cardSet.size)
+    // console.log(cardSet.size)
     if(cardSet.size===0){
         // how to clear but still remain with cards that players have
         // hio time yenye cards huisha then cards on the table zinachukuliwa kuendelesha game
-        console.log("Before cards are shuffled"+cardSet.size)
+        // console.log("Before cards are shuffled"+cardSet.size)
         cardSet=new Set(cardsArray)
         count=0
         while(count<humanCards.size){
@@ -68,7 +74,7 @@ function handler(){
             cardSet.delete(Array.from(cardSet)[count])
             count++
         }
-        console.log("cards shuffled"+cardSet.size)
+        // console.log("cards shuffled"+cardSet.size)
     }
     return imgName;
 }
@@ -79,39 +85,49 @@ function random(n){
 }
 
 // Game sounds
-function sound(){
+function sound(randomSound){
+    randomSound++
+    console.log(randomSound)
     let state=confirm("listen to some background music while you play..")
-    let playMusic=new Audio('../sounds/sound4.mp3')
+    let playMusic=new Audio(`assets/sounds/sound${randomSound}.mp3`)
     playMusic.volume=0.2
     playMusic.muted=true
     if(state===true){
+        playMusic.muted=false
         playMusic.play()
         info.innerHTML="Playing Background Music..." 
     }else if(state===false){
-        playMusic.paused()
+        // playMusic.muted=true
+        playMusic.pause()
+        playMusic.currentTime=0;
         info.innerHTML="Stopped"
     }
 }
 
 // Generates a random starting card from none special cards
 function startingCard(){
-    let imgName=handler()
-    // console.log(imgName[0]!="A")
-    if(imgName[0]!="A"&&imgName[0]!="2"&&imgName[0]!="3"&&imgName[0]!="8"&&imgName[0]!="J"&&imgName[0]!="K"&&imgName[0]!="Q"){
-    console.log(imgName[0])
-    let cardImg= document.createElement('img');
-    cardImg.setAttribute('id',imgName)
-    cardImg.src=`images/PNG/${imgName}.png`;
-    let imagesDiv=document.createElement('div')
-    imagesDiv.setAttribute('class','playing-card' )
-    document.querySelector('#starting-card').appendChild(imagesDiv)
-    imagesDiv.appendChild(cardImg);
-    info.innerHTML="Starting Card is: "+imgName
-    }else{
-        startingCard()
+    let imgName = handler()
+    let rightCard
+    console.log(`selecing starting card ${imgName}`)
+    while(imgName[0]==="A"||imgName[0]==="2"||imgName[0]==="3"||imgName[0]==="8"||imgName[0]==="J"||imgName[0]==="K"||imgName[0]==="Q"){
+        imgName=handler()
+        // startingCard()
     }
+    if(imgName[0]!="A"&&imgName[0]!="2"&&imgName[0]!="3"&&imgName[0]!="8"&&imgName[0]!="J"&&imgName[0]!="K"&&imgName[0]!="Q"){
+        // console.log(imgName[0])
+        let cardImg= document.createElement('img');
+        cardImg.setAttribute('id',imgName)
+        cardImg.src=`images/PNG/${imgName}.png`;
+        let imagesDiv=document.createElement('div')
+        imagesDiv.setAttribute('class','playing-card' )
+        document.querySelector('#starting-card').appendChild(imagesDiv)
+        imagesDiv.appendChild(cardImg);
+        info.innerHTML="Starting Card is: "+imgName
+        // rightCard=imgName
+        }
     
     return imgName
+    
 }
 
 // Randomly allocate the human player four cards
@@ -197,13 +213,14 @@ async function getPlayedCard(humanCardChoice){
         await sleep(1000)
         info.innerHTML="You Played: "+humanCardChoice
         if(humanCardChoice[0]===Bottom[0]||humanCardChoice[1]===Bottom[1]){
-            console.log(`removing ${humanCardChoice}`)
-            document.getElementById(humanCardChoice).remove()
+            console.log(`removing from human pack ${humanCardChoice}`)
+            // document.getElementById(humanCardChoice).remove()
+
             humanCards.delete(humanCardChoice)
         }
 
         if(humanCardChoice[0]==="Q"||humanCardChoice[0]==="8"){
-            playMore(GameStatus)
+           switchBetweenPlayers(false) 
         }else{
             // removeEventListeners()
             // console.log("done")
@@ -261,7 +278,7 @@ function computer(){
 
 function cardOnBoard(){
  let first=startingCard()
-//  console.log(first)
+ console.log(`starting card is ${first}`)
 
  return first;
 }
@@ -269,7 +286,7 @@ function cardOnBoard(){
 // the logic of the game. Used by the computer to understand the game
 //human=>the last card played while computer=>computer array of cards
 
-function gameLogic(computer){
+function gameLogic(computer){ 
     let computerPlayed
     let i=0
         if(GameStatus==true){
@@ -287,12 +304,13 @@ function gameLogic(computer){
                         info.innerHTML=`Computer Played: ${computerPlayed}`
                         // info.innerHTML="computer Played: "+computerPlayed                        let bb=computerPlayed
                         console.log(computerPlayed)
-                        if(computerPlayed!=null&&Bottom!=null){
-                        document.getElementById(computerPlayed).remove()
+                        if(computerPlayed[0]===Bottom[0]||computerPlayed[1]===Bottom[1]){
+                            console.log(`removing comp card from pack ${computerPlayed}`)
+                        // document.getElementById(computerPlayed).remove()
                         computerCards.delete(computerPlayed)
                         }
                         if(bb[0]==="Q"||bb[0]==="8"){
-                            playMore(GameStatus)
+                            switchBetweenPlayers(true)
                         }else{
                             console.log("switching")
                             switchBetweenPlayers(false)
@@ -313,9 +331,13 @@ function gameLogic(computer){
 
 // Rules of the game
 function gameRules(cardBottom,cardOnTop){
-    // console.log("card Bottom: "+cardBottom)
+    
     // console.log("card Top: "+cardOnTop)
 if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
+    // place this first line before any rule so as to remove player card once its clicked
+    if(cardOnTop!=null){
+    document.getElementById(cardOnTop).remove()
+    }
             console.log("card Bottom: "+cardBottom)
             console.log("card Top: "+cardOnTop)
             console.log("We're all set")
@@ -446,7 +468,7 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
                     // humanCards.delete(cardOnTop)
         }
         }else if(cardOnTop[0]==="Q"||cardOnTop[0]==="8"){
-            if(Bottom!=null){
+            if(Bottom!=null&&cardBottom!=null){
                 document.getElementById(cardBottom).remove()
                 }
             cardBottom=cardOnTop
@@ -499,7 +521,11 @@ if(cardBottom[0]===cardOnTop[0]||cardBottom[1]===cardOnTop[1]){
         
                 } 
             } 
-        }else if(cardBottom[0]!=cardOnTop[0]&&cardOnTop[0]==="A"){
+        }else if(cardOnTop[0]==="A"){
+            // place this first line before any rule so as to remove player card once its clicked
+            if(cardOnTop!=null){
+    document.getElementById(cardOnTop).remove()
+            }
             if(Bottom!=null||cardBottom!=null){
             document.getElementById("cardBottom").remove()
             }

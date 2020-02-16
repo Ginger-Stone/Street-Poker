@@ -215,14 +215,14 @@ function addEventListeners(){
 
 // let humanCardChoiceListener=document.addEventListener("click",func)
 
-async function getPlayedCard(humanCardChoice){
+function getPlayedCard(humanCardChoice){
     // console.log("my"+humanCardChoice)
     if(humanCardChoice!=null){
         let cardIsPlayed=gameRules(Bottom,humanCardChoice)
         if(cardIsPlayed===humanCardChoice){
         console.log(`Bottom card is ${humanCardChoice}`)
         console.log(`card is played ${cardIsPlayed}`)
-        await sleep(1000)
+        sleep(1000)
         info.innerHTML="You Played: "+humanCardChoice
         if(humanCardChoice[0]===Bottom[0]||humanCardChoice[1]===Bottom[1]){
             console.log(`removing from human pack ${humanCardChoice}`)
@@ -246,7 +246,7 @@ async function getPlayedCard(humanCardChoice){
             switchBetweenPlayers(true) 
     }else if(cardIsPlayed!=humanCardChoice){
         info.innerHTML="Not a possible move"
-        await sleep(1500)
+        sleep(1500)
         switchBetweenPlayers(false)
     }
     }else{
@@ -304,12 +304,15 @@ function gameLogic(computer){
         if(GameStatus==true){
             i=0
             compNumberOfCards=computer.size
-            if (compNumberOfCards===1){
-                console.log("nko Kadi"+computerCards[0])
-                nkoKadi(true)
-                
-            }else{
+            
+            // else{
             while(i<=compNumberOfCards){
+                if (compNumberOfCards===1){
+                    console.log("nko Kadi"+computerCards)
+                    nkoKadi(true)
+                    // break
+                    
+                }
                 computerIndex=Array.from(computer)[i]
                 
                 if(i<compNumberOfCards){
@@ -355,7 +358,7 @@ function gameLogic(computer){
             console.log(i)
     }
             
-        }  
+        // }  
     }     
 }
 
@@ -653,9 +656,9 @@ function jump(status){
         console.log("Game continues with " +Bottom)
     sleep(10)
     if (status===true){
-        switchBetweenPlayers(true)
+        // switchBetweenPlayers(true)
     }else if (status===false){
-        // switchBetweenPlayers(false)
+        switchBetweenPlayers(false)
     } 
 }
 
@@ -803,10 +806,10 @@ function nkoKadi(status){
             if(Bottom[0]===playerCard[0][0]||Bottom[1]===playerCard[0][1]){
                 document.getElementById('end-game').style="display:block;visibility:visible;color:white"
                 if(status===false){
-                document.getElementById('end-game').innerHTML=name+"won!!"
-                document.getElementById('end-game').
+                document.getElementById('end-game').innerHTML=name+" won!!🎉🎉🎉"
+                // document.getElementById('end-game').
                 }else if(status===true){
-                    
+                    document.getElementById('end-game').innerHTML=name+" won!!☹️"
                 }
             }
         }else{

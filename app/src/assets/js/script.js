@@ -752,7 +752,7 @@ function gameOver(){
     counter++
     timer(counter,12000,"Time Out",gameOverTimer)
 
-    currentCard.innerHTML=`Current card on board is :${Bottom}` 
+    currentCard.innerHTML=`Current card is :${Bottom}` 
 }
 
 // counter(Timer) function

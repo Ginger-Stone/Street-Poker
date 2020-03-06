@@ -65,7 +65,11 @@ button{
     margin-top: 20px;
 }
 
-a{text-decoration: none;}
+a{
+    text-decoration: none;
+    color:white;
+    
+}
 
 #starting-card,#info{
     margin: 40px 60px;
